@@ -11,7 +11,12 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
-    raise RuntimeError("DISCORD_TOKEN not set in environment")
+    raise RuntimeError(
+        "DISCORD_TOKEN not found!\n"
+        "1. Copy .env.example to .env\n"
+        "2. Replace YOUR_BOT_TOKEN_HERE with your actual bot token\n"
+        "3. Get a token from https://discord.com/developers/applications"
+    )
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -22,6 +27,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def load_extensions():
     for ext in [
         "prefixcommands.ping",
+        "prefixcommands.uptime",
         "slashcommands.hello",
         "events.handlers",
     ]:
