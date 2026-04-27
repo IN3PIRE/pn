@@ -1,2 +1,5 @@
-discord.py>=2.3.2
-python-dotenv>=1.0.0
+# Discord API wrapper — core library for building the bot
+discord.py==2.3.2
+
+# Environment variable management — loads DISCORD_TOKEN from .env file
+python-dotenv==1.0.0
