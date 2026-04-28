@@ -15,25 +15,25 @@ Welcome to **PN**, a beginner‑friendly Discord bot built with the latest `disc
 
 ## 📦 Getting Started
 1. **Clone the repo**
-   ```bash
-   git clone https://github.com/IN3PIRE/pn.git
-   cd pn
-   ```
+ ```bash
+ git clone https://github.com/IN3PIRE/pn.git
+ cd pn
+ ```
 2. **Create a virtual environment**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate   # On Windows: .venv\Scripts\activate
-   ```
+ ```bash
+ python -m venv .venv
+ source .venv/bin/activate # On Windows: .venv\Scripts\activate
+ ```
 3. **Install dependencies**
-   ```bash
-   pip install -U discord.py
-   ```
+ ```bash
+ pip install -U discord.py
+ ```
 4. **Add your bot token**
-   - Rename `.env.example` to `.env` and replace `YOUR_BOT_TOKEN` with your token.
+ - Rename `.env.example` to `.env` and replace `YOUR_BOT_TOKEN` with your token.
 5. **Run the bot**
-   ```bash
-   python bot.py
-   ```
+ ```bash
+ python bot.py
+ ```
 
 ---
 
@@ -42,32 +42,61 @@ Welcome to **PN**, a beginner‑friendly Discord bot built with the latest `disc
 ```python
 @bot.command()
 async def ping(ctx):
-    """Simple ping command"""
-    await ctx.send('Pong!')
+ """Simple ping command"""
+ await ctx.send('Pong!')
 ```
 
 ### Slash Commands
 ```python
 @bot.tree.command(name='hello', description='Say hello')
 async def hello(interaction: discord.Interaction):
-    await interaction.response.send_message('Hello, world!')
+ await interaction.response.send_message('Hello, world!')
 ```
 
 ### Event Handlers
 ```python
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user}')
+ print(f'Logged in as {bot.user}')
 ```
 
 ---
 
 ## 🤝 Contributing
-Contributions are welcome! Feel free to open issues or submit pull requests. Please follow the standard GitHub flow:
-1. Fork the repo.
-2. Create a feature branch (`git checkout -b feat/your-feature`).
-3. Commit your changes (`git commit -m "feat: add xyz"`).
-4. Push and open a PR.
+
+We welcome contributions! Please see our detailed [Contributing Guide](CONTRIBUTING.md) for:
+
+- 🌟 **Star Requirement**: Must star repo before PR merge
+- 📝 Step-by-step contribution process
+- ✅ Code standards and best practices
+- 🏷️ Issue labels and assignment process
+
+### Quick Contributing Steps:
+
+1. **Find an Issue**: Look for `good first issue` labels
+2. **Comment**: Say "I would like to work on this" on the issue
+3. **Wait for Assignment**: Don't start until assigned
+4. **Star the Repository** ⭐ (Click the star button at the top right)
+5. **Make Changes & Submit PR**: Follow our guidelines
+
+### 🌟 Why Star?
+
+**Before your PR can be merged, you must star this repository.**
+
+This requirement:
+- Verifies you're a human contributor (not a bot/spam account)
+- Shows your support for the project
+- Makes you part of our team shaping this repo's future
+- Helps us grow and maintain the project
+
+**We consider stargazers as part of our contributor team!**
+
+### Need Help?
+
+If you need help getting started:
+1. Comment on the issue you're interested in
+2. Check existing PRs for examples
+3. Read the [discord.py Guide](https://discordpy.readthedocs.io/)
 
 ---
 
