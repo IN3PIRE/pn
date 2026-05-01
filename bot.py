@@ -5,13 +5,13 @@ This module initializes and runs the bot, loading command and event cogs
 from the `prefixcommands`, `slashcommands`, and `events` packages.
 
 Configuration:
-    The bot requires a DISCORD_TOKEN environment variable, which should be
-    copied from .env.example to .env with a valid token.
+ The bot requires a DISCORD_TOKEN environment variable, which should be
+ copied from .env.example to .env with a valid token.
 
 Features:
-    - Prefix commands (e.g., !ping, !uptime)
-    - Slash commands (e.g., /hello)
-    - Event handlers (e.g., on_message, on_member_join)
+ - Prefix commands (e.g., !ping, !uptime, !userinfo)
+ - Slash commands (e.g., /hello)
+ - Event handlers (e.g., on_message, on_member_join)
 """
 
 import os
@@ -25,12 +25,12 @@ load_dotenv()
 # Validate critical configuration
 TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
- raise RuntimeError(
- "DISCORD_TOKEN not found!\n"
- "1. Copy .env.example to .env\n"
- "2. Replace YOUR_BOT_TOKEN_HERE with your actual bot token\n"
- "3. Get a token from https://discord.com/developers/applications"
- )
+    raise RuntimeError(
+        "DISCORD_TOKEN not found!\n"
+        "1. Copy .env.example to .env\n"
+        "2. Replace YOUR_BOT_TOKEN_HERE with your actual bot token\n"
+        "3. Get a token from https://discord.com/developers/applications"
+    )
 
 # Configure bot intents for required functionality
 intents = discord.Intents.default()
@@ -41,7 +41,7 @@ bot = commands.Bot(command_prefix=os.getenv("PREFIX", "!"), intents=intents)
 
 
 async def load_extensions() -> None:
- """Load all bot extensions (cogs) from predefined modules.
+    """Load all bot extensions (cogs) from predefined modules.
 
     This function attempts to load command and event cogs from their
     respective packages. It provides detailed logging for each module
@@ -55,48 +55,49 @@ async def load_extensions() -> None:
         instead of crashing the bot. This allows partial bot functionality
         even if some cogs are broken.
     """
- for ext in [
- "prefixcommands.ping",
- "prefixcommands.uptime",
- "slashcommands.hello",
- "events.handlers",
- ]:
- try:
- await bot.load_extension(ext)
- print(f"Loaded extension: {ext}")
- except Exception as e:
- print(f"Failed to load {ext}: {e}")
+    for ext in [
+        "prefixcommands.ping",
+        "prefixcommands.uptime",
+        "prefixcommands.userinfo",
+        "slashcommands.hello",
+        "events.handlers",
+    ]:
+        try:
+            await bot.load_extension(ext)
+            print(f"Loaded extension: {ext}")
+        except Exception as e:
+            print(f"Failed to load {ext}: {e}")
 
 
 @bot.event
 async def setup_hook() -> None:
- """Called after the bot logs in but before it starts processing events.
+    """Called after the bot logs in but before it starts processing events.
 
     This hook routine does two critical tasks:
     1. Loads all command and event cogs/extensions
     2. Syncs slash commands with Discord (globally or per-guild if needed)
 
     Note:
-        Slash command sync can take up to an hour for global commands,
-        but is instant when done per-guild during development.
+    Slash command sync can take up to an hour for global commands,
+    but is instant when done per-guild during development.
 
     Args:
         None
 
     Side Effects:
-        - Registers all cogs and their commands/events
-        - Syncs the command tree with Discord's API
-        - Prints status messages to console
+    - Registers all cogs and their commands/events
+    - Syncs the command tree with Discord's API
+    - Prints status messages to console
     """
- await load_extensions()
- # Sync slash commands once when the bot starts
- try:
- await bot.tree.sync()
- print("Slash commands synced.")
- except Exception as e:
- print(f"Failed to sync slash commands: {e}")
+    await load_extensions()
+    # Sync slash commands once when the bot starts
+    try:
+        await bot.tree.sync()
+        print("Slash commands synced.")
+    except Exception as e:
+        print(f"Failed to sync slash commands: {e}")
 
 
 if __name__ == "__main__":
- # Start the bot with the Discord token from environment
- bot.run(TOKEN)
+    # Start the bot with the Discord token from environment
+    bot.run(TOKEN)
