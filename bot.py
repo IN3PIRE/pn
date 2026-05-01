@@ -10,7 +10,7 @@ Configuration:
 
 Features:
  - Prefix commands (e.g., !ping, !uptime, !userinfo, !serverinfo)
- - Slash commands (e.g., /hello, /echo)
+ - Slash commands (e.g., /hello, /echo, /serverinfo, /userinfo, /avatar, /8ball, /choose, /ping)
  - Event handlers (e.g., on_message, on_member_join)
 """
 
@@ -34,7 +34,8 @@ if not TOKEN:
 
 # Configure bot intents for required functionality
 intents = discord.Intents.default()
-intents.message_content = True # Required for prefix commands and message events
+intents.message_content = True  # Required for prefix commands and message events
+intents.members = True  # Required for member-related commands like userinfo
 
 # Initialize bot with prefix from environment (defaults to !)
 bot = commands.Bot(command_prefix=os.getenv("PREFIX", "!"), intents=intents)
@@ -56,12 +57,22 @@ async def load_extensions() -> None:
         even if some cogs are broken.
     """
     for ext in [
+        # Prefix commands
         "prefixcommands.ping",
         "prefixcommands.uptime",
         "prefixcommands.userinfo",
         "prefixcommands.serverinfo",
+        # Slash commands - existing
         "slashcommands.hello",
         "slashcommands.echo",
+        # New slash commands
+        "slashcommands.serverinfo",
+        "slashcommands.userinfo",
+        "slashcommands.avatar",
+        "slashcommands.8ball",
+        "slashcommands.choose",
+        "slashcommands.ping",
+        # Event handlers
         "events.handlers",
     ]:
         try:
@@ -69,6 +80,9 @@ async def load_extensions() -> None:
             print(f"Loaded extension: {ext}")
         except Exception as e:
             print(f"Failed to load {ext}: {e}")
+            # Print full traceback for debugging during development
+            import traceback
+            traceback.print_exc()
 
 
 @bot.event
@@ -94,10 +108,13 @@ async def setup_hook() -> None:
     await load_extensions()
     # Sync slash commands once when the bot starts
     try:
-        await bot.tree.sync()
-        print("Slash commands synced.")
+        synced = await bot.tree.sync()
+        print(f"Slash commands synced: {len(synced)} commands registered")
+        print(f"Commands: {[cmd.name for cmd in synced]}")
     except Exception as e:
         print(f"Failed to sync slash commands: {e}")
+        import traceback
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
