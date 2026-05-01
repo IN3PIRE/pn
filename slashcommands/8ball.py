@@ -91,6 +91,8 @@ class EightBall(commands.Cog):
                         "As I see it, yes.", "Most likely.", "Outlook good.", "Yes.", "Signs point to yes."]:
 color = discord.Color.green()
 itral in ["Reply hazy, try again.", "Ask again later.", "Better not tell you now.",
-itrate now."}]:	color = discord.Color.gold()
+itrate now."]:	color = discord.Color.gold()
 color = discord.Color.red()
-        		   embed = discord.Embed(			   title="🎱 Magic 8-Ball",			   description=f"**Question:** {question}\f**Answer:** {response}",			   color=color		   )		   		   embed.set_footer(			   text=f"Asked by {interaction.user}",			   icon_url=interaction.user.display_avatar.url if interaction.user.display_avatar else None		   )		   		   await interaction.response.send_message(embed=embed)	   	   async def setup(bot: commands.Bot) -> None:		"""Register the 8Ball cog with the bot.		Args:		   bot: The bot instance to register the cog with.	   """	   await bot.add_cog(EightBall(bot))
+color = discord.Color.red()
+color = discord.Color.red()
+color = discord.Color.red()
